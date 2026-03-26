@@ -15,6 +15,7 @@ API_KEY_ENV_VARS = {
     "gemini": "GEMINI_API_KEY",
     "openai": "OPENAI_API_KEY",
     "anthropic": "ANTHROPIC_API_KEY",
+    "forge": "FORGE_API_KEY",
 }
 
 

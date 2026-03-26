@@ -1,5 +1,6 @@
 import importlib
 import logging
+import os
 from typing import TYPE_CHECKING, Any
 
 from llama_index.core.llms.llm import LLM
@@ -44,12 +45,28 @@ def load_llm(provider_name: str, model: str | None = None, **kwargs: Any) -> LLM
     if model is not None:
         kwargs["model"] = model
 
+    provider_class_name = provider_name
+
     if provider_name == "OpenAILike":
         module_provider_part = "openai_like"
         kwargs.setdefault("is_chat_model", True)
         # OpenAILike uses api_base, not base_url - handle both for convenience
         if "base_url" in kwargs and "api_base" not in kwargs:
             kwargs["api_base"] = kwargs.pop("base_url")
+    elif provider_name == "Forge":
+        module_provider_part = "openai_like"
+        provider_class_name = "OpenAILike"
+        kwargs.setdefault("is_chat_model", True)
+        if "base_url" in kwargs and "api_base" not in kwargs:
+            kwargs["api_base"] = kwargs.pop("base_url")
+        if "api_base" not in kwargs:
+            kwargs["api_base"] = (
+                os.getenv("FORGE_API_BASE") or "https://api.forge.tensorblock.co/v1"
+            )
+        if "api_key" not in kwargs:
+            forge_api_key = os.getenv("FORGE_API_KEY")
+            if forge_api_key:
+                kwargs["api_key"] = forge_api_key
     elif provider_name == "GoogleGenAI":
         module_provider_part = "google_genai"
     else:
@@ -78,9 +95,9 @@ def load_llm(provider_name: str, model: str | None = None, **kwargs: Any) -> LLM
 
     try:
         logger.debug(
-            f"Attempting to get class '{provider_name}' from module {module_path}"
+            f"Attempting to get class '{provider_class_name}' from module {module_path}"
         )
-        llm_class = getattr(llm_module, provider_name)
+        llm_class = getattr(llm_module, provider_class_name)
         logger.debug(f"Found class: {llm_class.__name__}")
 
         # Verify the class is a subclass of LLM
@@ -105,9 +122,11 @@ def load_llm(provider_name: str, model: str | None = None, **kwargs: Any) -> LLM
         return llm_instance
 
     except AttributeError:
-        logger.error(f"Class '{provider_name}' not found in module '{module_path}'.")
+        logger.error(
+            f"Class '{provider_class_name}' not found in module '{module_path}'."
+        )
         raise AttributeError(
-            f"Could not find class '{provider_name}' in module '{module_path}'. Check spelling and capitalization."
+            f"Could not find class '{provider_class_name}' in module '{module_path}'. Check spelling and capitalization."
         ) from None
     except TypeError as e:
         logger.error(f"Error initializing {provider_name}: {e}")

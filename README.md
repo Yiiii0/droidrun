@@ -43,7 +43,7 @@ Mobilerun is a cloud solution powered by Droidrun a powerful framework for contr
 
 
 - 🤖 Control Android and iOS devices with natural language commands
-- 🔀 Supports multiple LLM providers (OpenAI, Anthropic, Gemini, Ollama, DeepSeek)
+- 🔀 Supports multiple LLM providers (OpenAI, Forge, Anthropic, Gemini, Ollama, DeepSeek)
 - 🧠 Planning capabilities for complex multi-step tasks
 - 💻 Easy to use CLI with enhanced debugging features
 - 🐍 Extendable Python API for custom automations

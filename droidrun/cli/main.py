@@ -339,7 +339,7 @@ except Exception:
 @click.option(
     "--provider",
     "-p",
-    help="LLM provider (OpenAI, Ollama, Anthropic, GoogleGenAI, DeepSeek)",
+    help="LLM provider (OpenAI, Forge, Ollama, Anthropic, GoogleGenAI, DeepSeek)",
     default=None,
 )
 @click.option(
