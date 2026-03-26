@@ -89,6 +89,12 @@ droidrun "Create shopping list" \
   --provider OpenAI \
   --model gpt-4o
 
+# Forge (OpenAI-compatible)
+export FORGE_API_KEY=your-key
+droidrun "Summarize unread notifications" \
+  --provider Forge \
+  --model OpenAI/gpt-4o-mini
+
 # Anthropic Claude
 export ANTHROPIC_API_KEY=your-key
 droidrun "Reply to latest email" \
@@ -134,6 +140,7 @@ droidrun "Enable 2FA" \
 |----------|---------|---------------------|
 | GoogleGenAI | Included by default | `GOOGLE_API_KEY` |
 | OpenAI | Included by default | `OPENAI_API_KEY` |
+| Forge | Included by default | `FORGE_API_KEY` |
 | OpenAILike | Included by default | Varies by provider |
 | OpenRouter | Included by default | `OPENROUTER_API_KEY` |
 | Ollama | Included by default | None (local) |

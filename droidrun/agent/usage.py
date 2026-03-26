@@ -14,6 +14,7 @@ SUPPORTED_PROVIDERS = [
     "GoogleGenAI",
     "GenAI",
     "OpenAI",
+    "OpenAILike",
     "openai_llm",
     "Anthropic",
     "Ollama",

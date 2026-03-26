@@ -52,7 +52,7 @@ uv pip install droidrun
 ```
 
 <Note>
-Most LLM providers (Google Gemini, OpenAI, Ollama, OpenRouter) are included by default. For additional providers, install extras: `uv tool install 'droidrun[anthropic,deepseek]'`.
+Most LLM providers (Google Gemini, OpenAI, Forge, Ollama, OpenRouter) are included by default. For additional providers, install extras: `uv tool install 'droidrun[anthropic,deepseek]'`.
 </Note>
 
 ### Set Up the Portal APK
@@ -96,6 +96,9 @@ export GOOGLE_API_KEY=your-api-key-here
 # For OpenAI
 export OPENAI_API_KEY=your-api-key-here
 
+# For Forge (OpenAI-compatible model format: Provider/model-name)
+export FORGE_API_KEY=your-api-key-here
+
 # For Anthropic Claude
 export ANTHROPIC_API_KEY=your-api-key-here
 
@@ -122,7 +125,7 @@ droidrun run "Find a contact named John and send him an email" --reasoning
 ```
 
 **Common CLI flags:**
-- `--provider` - LLM provider (GoogleGenAI, OpenAI, Anthropic, etc.)
+- `--provider` - LLM provider (GoogleGenAI, OpenAI, Forge, Anthropic, etc.)
 - `--model` - Model name (models/gemini-2.5-pro, gpt-4o, etc.)
 - `--vision` - Enable screenshot processing
 - `--reasoning` - Enable multi-agent planning mode
